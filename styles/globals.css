@@ -1,16 +1,57 @@
-html,
-body {
+* {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
-* {
+html {
   box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+}
+
+/*
+0 - 600px          Phone
+600 - 900px        Tablet Portrait
+900 - 1200px       Tablet Landscape
+[1200 - 1800]      Our normal style
+1800+px            Big Screen
+*/
+
+/* Tablet Land */
+@media (max-width: 75rem) {
+  html {
+    font-size: 50%;
+  }
+}
+
+/* Tablet Portrait */
+@media (max-width: 56.25rem) {
+  html {
+    font-size: 56.25%;
+  }
+}
+
+/* Phone */
+@media (max-width: 37.5rem) {
+  html {
+    font-size: 56.25%;
+  }
+}
+
+/* Big Desktop */
+@media (min-width: 112.5rem) {
+  html {
+    /* 1rem = 12px, 12/16 = 75% */
+    font-size: 75%;
+  }
 }

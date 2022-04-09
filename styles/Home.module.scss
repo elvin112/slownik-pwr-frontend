@@ -1,0 +1,6 @@
+@import "mixins";
+
+.home {
+  @include respond(big-desktop) {
+  }
+}
