@@ -1,0 +1,7 @@
+@import "../styles/_mixins";
+
+.test {
+  @include respond(big-desktop) {
+    background-color: blueviolet;
+  }
+}
