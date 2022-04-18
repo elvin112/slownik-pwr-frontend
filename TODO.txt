@@ -1,0 +1,29 @@
+1- Make sidebar and fetch the elements via useEffect
+
+2- Make index.js dynamic and fetch the items using getStaticPaths with pagination details in note
+
+3- Make redux uiNotifications and use them for error handling
+
+4- Make a loading spinner and use that in components fetching states
+
+
+
+
+
+
+
+
+
+
+
+
+Archived
+
+
+4- Populate content and the navbar using backend
+
+5- Add pagination
+
+6- Add getStaticProps and getStaticPaths to the dynamic Posts Screen
+
+7- Create an icon for the app and use that one in public
