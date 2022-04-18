@@ -3,7 +3,6 @@ import Sidebar from "../components/HomeComponents/Sidebar/Sidebar";
 import ContentContainer from "../components/HomeComponents/ContentContainer/ContentContainer";
 
 import styles from "./Home.module.scss";
-import { lightTheme } from "../constants/theme";
 
 export default function Home() {
   return (

@@ -1,4 +1,8 @@
-1- Make sidebar and fetch the elements via useEffect
+1- Give fetched data to content container but make sure it also fetches data and controls if there is need for update
+
+1- Learn all the next.js stuff
+
+1- Build a dynamic home page
 
 2- Make index.js dynamic and fetch the items using getStaticPaths with pagination details in note
 
