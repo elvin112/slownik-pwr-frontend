@@ -1,0 +1,60 @@
+.container {
+  background-color: lightgray;
+}
+
+.formControl {
+  margin-bottom: 1.3rem;
+}
+
+.formLabel {
+  display: block;
+  font-size: 1.6rem;
+}
+
+.formInput {
+  width: 40%;
+}
+
+.aggrementContainer {
+  width: 40%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1.3rem;
+}
+.checkbox {
+  margin-right: 1rem;
+}
+
+.checkboxLabel {
+  color: rgb(112, 110, 110);
+  font-size: 1.4rem;
+
+  cursor: pointer;
+}
+
+.checkboxSpan {
+  color: #b32216;
+}
+
+.blockButton {
+  width: 40%;
+  height: 2.5rem;
+  background-color: #b32216;
+  color: white;
+  font-size: 1.4rem;
+  margin-bottom: 1.3rem;
+  border: none;
+  cursor: pointer;
+}
+
+.alreadyMemberContainer {
+}
+
+.alreadyMemberParagraph {
+  font-size: 1.4rem;
+}
+
+.alreadyMemberLink {
+  color: #b32216;
+}

@@ -1,6 +1,9 @@
 @import "mixins";
 
-.home {
+.container {
   @include respond(big-desktop) {
   }
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
 }
