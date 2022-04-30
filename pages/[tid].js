@@ -1,9 +1,14 @@
 import axios from "axios";
 
 import HomeLayout from "../components/Layout/HomeLayout";
+import ContentContainer from "../components/HomeComponents/ContentContainer/ContentContainer";
 
 const Title = ({ titleName, posts }) => {
-  return <HomeLayout />;
+  return (
+    <HomeLayout>
+      <ContentContainer titleName={titleName} posts={posts} />
+    </HomeLayout>
+  );
 };
 
 export default Title;
