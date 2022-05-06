@@ -3,25 +3,26 @@ import { useRouter } from "next/router";
 
 import HomeLayout from "../components/Layout/HomeLayout";
 import ContentContainer from "../components/HomeComponents/ContentContainer/ContentContainer";
+import { POSTS_PER_PAGE } from "../constants/constantNums";
 
-const POSTS_PER_PAGE = 7;
-
-const Title = ({ titleName, posts }) => {
+const Title = ({ titleName, posts, url }) => {
   const router = useRouter();
 
   return (
     <HomeLayout>
-      <ContentContainer titleName={titleName} posts={posts} />
+      <ContentContainer titleName={titleName} serverPosts={posts} url={url} />
     </HomeLayout>
   );
 };
 
 export default Title;
 
-// All the sidebar titles are added to the static paths
+// All the titles and pages of the titles added to static paths
 export const getStaticPaths = async () => {
+  // Fetch all the titles
   const result = await axios.get("http://localhost:8080/posts/all-titles");
 
+  // Store all the possible path parameters in fetchedParams
   const allTitles = result.data;
   const fetchedParams = [];
 
@@ -49,11 +50,15 @@ export async function getStaticProps(context) {
   const pageId = params.title[1];
 
   try {
-    const result = await axios.get(
-      `http://localhost:8080/posts/title/${titleId}?pId=${pageId || 1}`
-    );
+    const url = `http://localhost:8080/posts/title/${titleId}?pId=${
+      pageId || 1
+    }`;
+
+    // Make request to each one of the parameters coming from getStaticParams
+    const result = await axios.get(url);
     const data = result.data;
 
+    // If there are no posts return to notFound
     if (result.status !== 200) {
       throw new Error("Couldn't fetch the data");
     }
@@ -62,8 +67,9 @@ export async function getStaticProps(context) {
       props: {
         posts: data.posts,
         titleName: data.titleName,
+        url,
       },
-      revalidate: 3600,
+      revalidate: 60,
     };
   } catch (error) {
     return {
