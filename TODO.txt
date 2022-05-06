@@ -1,10 +1,6 @@
-1- Give fetched data to content container but make sure it also fetches data and controls if there is need for update
+1- Store POSTS_PER_PAGE in constants
 
-1- Learn all the next.js stuff
-
-1- Build a dynamic home page
-
-2- Make index.js dynamic and fetch the items using getStaticPaths with pagination details in note
+2- Use useSWR for the conditions if posts coming are smaller than POSTS_PER_PAGE then commit->merge changes
 
 3- Make redux uiNotifications and use them for error handling
 
