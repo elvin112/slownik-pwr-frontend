@@ -2,6 +2,10 @@ import styles from "./ContentContainer.module.scss";
 import Post from "./Post";
 
 const ContentContainer = ({ titleName, posts }) => {
+  if (!posts) {
+    return <p>No posts</p>;
+  }
+
   const postsArray = posts.map((post) => {
     return (
       <Post

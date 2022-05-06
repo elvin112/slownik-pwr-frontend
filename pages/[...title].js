@@ -1,9 +1,14 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 
 import HomeLayout from "../components/Layout/HomeLayout";
 import ContentContainer from "../components/HomeComponents/ContentContainer/ContentContainer";
 
+const POSTS_PER_PAGE = 7;
+
 const Title = ({ titleName, posts }) => {
+  const router = useRouter();
+
   return (
     <HomeLayout>
       <ContentContainer titleName={titleName} posts={posts} />
@@ -15,15 +20,20 @@ export default Title;
 
 // All the sidebar titles are added to the static paths
 export const getStaticPaths = async () => {
-  const result = await axios.get("http://localhost:8080/posts/titles/0");
+  const result = await axios.get("http://localhost:8080/posts/all-titles");
 
-  const fetchedParams = result.data.bestTitles.map((titleItem) => {
-    return { params: { tid: titleItem._id } };
-  });
+  const allTitles = result.data;
+  const fetchedParams = [];
 
-  const anotherParams = fetchedParams.map((item) => {
-    return;
-  });
+  for (let i = 0; i < allTitles.length; i++) {
+    const maxPage = Math.floor(allTitles[i].length / POSTS_PER_PAGE) + 1;
+
+    for (let j = 0; j < maxPage; j++) {
+      fetchedParams.push({
+        params: { title: [allTitles[i]._id, (j + 1).toString()] },
+      });
+    }
+  }
 
   return {
     paths: fetchedParams,
@@ -35,14 +45,12 @@ export const getStaticPaths = async () => {
 export async function getStaticProps(context) {
   const { params } = context;
 
-  const titleId = params.tid;
-
-  // For the future
-  const pageId = params.pid;
+  const titleId = params.title[0];
+  const pageId = params.title[1];
 
   try {
     const result = await axios.get(
-      `http://localhost:8080/posts/title/${titleId}?pId=1`
+      `http://localhost:8080/posts/title/${titleId}?pId=${pageId || 1}`
     );
     const data = result.data;
 
@@ -55,7 +63,7 @@ export async function getStaticProps(context) {
         posts: data.posts,
         titleName: data.titleName,
       },
-      revalidate: 60,
+      revalidate: 3600,
     };
   } catch (error) {
     return {

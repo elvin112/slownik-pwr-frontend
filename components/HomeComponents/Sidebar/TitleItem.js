@@ -4,7 +4,7 @@ import styles from "./TitleItem.module.scss";
 
 const TitleItem = ({ children, id, counter }) => {
   return (
-    <Link className={`${styles.link}`} href={`${id}`} passHref>
+    <Link className={`${styles.link}`} href={`${id}/1`} passHref>
       <div className={`${styles.container}`}>
         <div>
           <a>{children}</a>
