@@ -20,7 +20,7 @@ export default function Home() {
 
 export async function getStaticProps() {
   try {
-    const result = await axios.get(`http://localhost:8080/posts/get-titles`);
+    const result = await axios.get(`http://localhost:8080/posts/titles/0`);
     const data = result.data;
 
     if (result.status !== 200) {
@@ -29,7 +29,7 @@ export async function getStaticProps() {
 
     return {
       redirect: {
-        destination: "/" + data.output[0]._id,
+        destination: "/" + data.bestTitles[0]._id,
       },
     };
   } catch (err) {

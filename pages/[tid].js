@@ -15,9 +15,9 @@ export default Title;
 
 // All the sidebar titles are added to the static paths
 export const getStaticPaths = async () => {
-  const result = await axios.get("http://localhost:8080/posts/get-titles");
+  const result = await axios.get("http://localhost:8080/posts/titles/0");
 
-  const fetchedParams = result.data.output.map((titleItem) => {
+  const fetchedParams = result.data.bestTitles.map((titleItem) => {
     return { params: { tid: titleItem._id } };
   });
 
@@ -42,7 +42,7 @@ export async function getStaticProps(context) {
 
   try {
     const result = await axios.get(
-      `http://localhost:8080/posts/get-title/${titleId}`
+      `http://localhost:8080/posts/title/${titleId}?pId=1`
     );
     const data = result.data;
 
@@ -52,8 +52,8 @@ export async function getStaticProps(context) {
 
     return {
       props: {
-        posts: data.titleResult.posts,
-        titleName: data.titleResult.titleName,
+        posts: data.posts,
+        titleName: data.titleName,
       },
       revalidate: 60,
     };

@@ -10,15 +10,13 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchTitles = async () => {
       try {
-        const result = await axios.get(
-          "http://localhost:8080/posts/get-titles"
-        );
+        const result = await axios.get("http://localhost:8080/posts/titles/0");
 
         if (result.status !== 200) {
           throw new Error("Error while fetching titles");
         }
 
-        setTitles(result.data.output);
+        setTitles(result.data.bestTitles);
       } catch (err) {
         console.log(err);
       }
@@ -31,8 +29,8 @@ const Sidebar = () => {
     if (idx > 20) return;
 
     return (
-      <TitleItem key={title._id} id={title._id}>
-        {title.titleName}
+      <TitleItem key={title._id} id={title._id} counter={title.counter}>
+        {title.name}
       </TitleItem>
     );
   });

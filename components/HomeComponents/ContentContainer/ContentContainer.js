@@ -7,7 +7,7 @@ const ContentContainer = ({ titleName, posts }) => {
       <Post
         key={post._id}
         date={post.date}
-        postContent={post.postContent}
+        postContent={post.content}
         username={post.userId.username}
       />
     );
