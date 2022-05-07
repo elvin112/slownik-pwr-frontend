@@ -1,16 +1,19 @@
 import axios from "axios";
-import { useRouter } from "next/router";
 
 import HomeLayout from "../components/Layout/HomeLayout";
 import ContentContainer from "../components/HomeComponents/ContentContainer/ContentContainer";
 import { POSTS_PER_PAGE } from "../constants/constantNums";
 
-const Title = ({ titleName, posts, url }) => {
-  const router = useRouter();
-
+const Title = ({ titleName, posts, url, baseUrl, currentPage, totalPages }) => {
   return (
     <HomeLayout>
-      <ContentContainer titleName={titleName} serverPosts={posts} url={url} />
+      <ContentContainer
+        titleName={titleName}
+        serverPosts={posts}
+        baseUrl={baseUrl}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
     </HomeLayout>
   );
 };
@@ -50,6 +53,8 @@ export async function getStaticProps(context) {
   const pageId = params.title[1];
 
   try {
+    const baseUrl = `http://localhost:8080/posts/title/${titleId}?pId=`;
+
     const url = `http://localhost:8080/posts/title/${titleId}?pId=${
       pageId || 1
     }`;
@@ -67,7 +72,9 @@ export async function getStaticProps(context) {
       props: {
         posts: data.posts,
         titleName: data.titleName,
-        url,
+        baseUrl,
+        currentPage: pageId,
+        totalPages: data.totalPages,
       },
       revalidate: 60,
     };

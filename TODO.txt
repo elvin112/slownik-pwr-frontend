@@ -1,6 +1,12 @@
-1- Store POSTS_PER_PAGE in constants
+1- Make pagination buttons
 
-2- Use useSWR for the conditions if posts coming are smaller than POSTS_PER_PAGE then commit->merge changes
+2- Understand why build doesn't work and make it work
+
+3- Handle redux authentication with remainingTime
+
+4- Handle login signup validation
+
+5- Create post create component
 
 3- Make redux uiNotifications and use them for error handling
 
