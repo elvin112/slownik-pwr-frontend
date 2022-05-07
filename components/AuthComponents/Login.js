@@ -23,6 +23,7 @@ function formReducer(state, action) {
 }
 
 const Login = () => {
+  console.log("test");
   const [formState, dispatch] = useReducer(formReducer, {
     email: "",
     password: "",
