@@ -1,5 +1,8 @@
 import Head from "next/head";
+import { Provider } from "react-redux";
 import "../styles/globals.css";
+
+import store from "../store/index";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -12,7 +15,9 @@ function MyApp({ Component, pageProps }) {
           content="Platforma społecznościowa Politechniki Wrocławskiej"
         />
       </Head>
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
     </>
   );
 }
