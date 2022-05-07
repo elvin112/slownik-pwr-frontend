@@ -29,7 +29,7 @@ export async function getStaticProps() {
 
     return {
       redirect: {
-        destination: "/" + data.bestTitles[0]._id,
+        destination: "/" + data.bestTitles[0]._id + "/1",
       },
     };
   } catch (err) {
