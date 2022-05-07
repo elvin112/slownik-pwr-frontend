@@ -5,11 +5,11 @@ import styles from "./Login.module.scss";
 
 function formReducer(state, action) {
   switch (action.type) {
-    case "USERNAME":
+    case "EMAIL":
       return {
         ...state,
-        username: action.val,
-        isUsernameValid: action.val.trim().length > 0,
+        email: action.val,
+        isEmailValid: action.val.trim().length > 0,
       };
     case "PASSWORD":
       return {
@@ -24,23 +24,23 @@ function formReducer(state, action) {
 
 const Login = () => {
   const [formState, dispatch] = useReducer(formReducer, {
-    username: "",
+    email: "",
     password: "",
-    isUsernameValid: false,
+    isEmailValid: false,
     isPasswordValid: false,
   });
-  const [enteredUsernameIsValid, setEnteredUsernameIsValid] = useState(true);
+  const [enteredEmailIsValid, setEnteredEmailIsValid] = useState(true);
   const [enteredPasswordIsValid, setEnteredPasswordIsValid] = useState(true);
 
-  const { isUsernameValid } = formState;
+  const { isEmailValid } = formState;
   const { isPasswordValid } = formState;
 
   function formSubmissionHandler(event) {
     event.preventDefault();
-    if (isUsernameValid && isPasswordValid) {
+    if (isEmailValid && isPasswordValid) {
       return;
     }
-    setEnteredUsernameIsValid(isUsernameValid);
+    setEnteredEmailIsValid(isEmailValid);
     setEnteredPasswordIsValid(isPasswordValid);
   }
 
@@ -48,21 +48,21 @@ const Login = () => {
     <form className={`${styles.container}`} onSubmit={formSubmissionHandler}>
       <h1 className={`${styles.title}`}>login</h1>
       <div className={`${styles.formControl}`}>
-        <label className={`${styles.formLabel}`} htmlFor="username">
-          username
+        <label className={`${styles.formLabel}`} htmlFor="email">
+          email
         </label>
         <input
           onChange={(event) =>
-            dispatch({ type: "USERNAME", val: event.currentTarget.value })
+            dispatch({ type: "EMAIL", val: event.currentTarget.value })
           }
           className={`${styles.formInput} ${
-            !enteredUsernameIsValid && !isUsernameValid && styles.invalidInput
+            !enteredEmailIsValid && !isEmailValid && styles.invalidInput
           }`}
-          id="username"
-          type="text"
+          id="email"
+          type="email"
         />
-        {!enteredUsernameIsValid && !isUsernameValid && (
-          <p>username must not be empty!</p>
+        {!enteredEmailIsValid && !isEmailValid && (
+          <p>email must not be empty!</p>
         )}
       </div>
       <div className={`${styles.formControl}`}>
