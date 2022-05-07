@@ -15,9 +15,19 @@
 
 
 
+LOADING SPINNER USAGE
+
+import { createPortal } from "react-dom";
+import LoadingSpinner from "../components/HomeComponents/ui/loadingSpinner/LoadingSpinner";
 
 
+      {createPortal(<LoadingSpinner />, document.querySelector("#overlays"))}
 
+
+// TODO
+// 1- make Login function with local storage
+// 2- make in initial login using the stored token makes the login connection
+// 3- make auto-logout feature with expiresIn
 
 
 
