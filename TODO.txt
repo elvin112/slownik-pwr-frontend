@@ -1,10 +1,12 @@
-1- Give fetched data to content container but make sure it also fetches data and controls if there is need for update
+1- Make pagination buttons
 
-1- Learn all the next.js stuff
+2- Understand why build doesn't work and make it work
 
-1- Build a dynamic home page
+3- Handle redux authentication with remainingTime
 
-2- Make index.js dynamic and fetch the items using getStaticPaths with pagination details in note
+4- Handle login signup validation
+
+5- Create post create component
 
 3- Make redux uiNotifications and use them for error handling
 
@@ -13,9 +15,19 @@
 
 
 
+LOADING SPINNER USAGE
+
+import { createPortal } from "react-dom";
+import LoadingSpinner from "../components/HomeComponents/ui/loadingSpinner/LoadingSpinner";
 
 
+      {createPortal(<LoadingSpinner />, document.querySelector("#overlays"))}
 
+
+// TODO
+// 1- make Login function with local storage
+// 2- make in initial login using the stored token makes the login connection
+// 3- make auto-logout feature with expiresIn
 
 
 
