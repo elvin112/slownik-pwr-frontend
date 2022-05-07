@@ -23,7 +23,6 @@ function formReducer(state, action) {
 }
 
 const Login = () => {
-  console.log("test");
   const [formState, dispatch] = useReducer(formReducer, {
     email: "",
     password: "",
@@ -60,7 +59,7 @@ const Login = () => {
             !enteredEmailIsValid && !isEmailValid && styles.invalidInput
           }`}
           id="email"
-          type="email"
+          type="text"
         />
         {!enteredEmailIsValid && !isEmailValid && (
           <p>email must not be empty!</p>
