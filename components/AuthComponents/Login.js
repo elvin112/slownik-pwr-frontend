@@ -1,48 +1,112 @@
+import { useReducer, useEffect, useState } from "react";
+
 import Link from "next/link";
 import styles from "./Login.module.scss";
 
+function formReducer(state, action) {
+  switch (action.type) {
+    case "USERNAME":
+      return {
+        ...state,
+        username: action.val,
+        isUsernameValid: action.val.trim().length > 0,
+      };
+    case "PASSWORD":
+      return {
+        ...state,
+        password: action.val,
+        isPasswordValid: action.val.trim().length > 0,
+      };
+    default:
+      return state;
+  }
+}
+
 const Login = () => {
+  const [formState, dispatch] = useReducer(formReducer, {
+    username: "",
+    password: "",
+    isUsernameValid: false,
+    isPasswordValid: false,
+  });
+  const [enteredUsernameIsValid, setEnteredUsernameIsValid] = useState(true);
+  const [enteredPasswordIsValid, setEnteredPasswordIsValid] = useState(true);
+
+  const { isUsernameValid } = formState;
+  const { isPasswordValid } = formState;
+
+  function formSubmissionHandler(event) {
+    event.preventDefault();
+    if (isUsernameValid && isPasswordValid) {
+      return;
+    }
+    setEnteredUsernameIsValid(isUsernameValid);
+    setEnteredPasswordIsValid(isPasswordValid);
+  }
+
   return (
-    <form className={`${styles.container}`}>
+    <form className={`${styles.container}`} onSubmit={formSubmissionHandler}>
+      <h1 className={`${styles.title}`}>login</h1>
       <div className={`${styles.formControl}`}>
-        <label className={`${styles.formLabel}`} htmlFor="email">
-          Email
+        <label className={`${styles.formLabel}`} htmlFor="username">
+          username
         </label>
-        <input className={`${styles.formInput}`} id="email" type="email" />
+        <input
+          onChange={(event) =>
+            dispatch({ type: "USERNAME", val: event.currentTarget.value })
+          }
+          className={`${styles.formInput} ${
+            !enteredUsernameIsValid && !isUsernameValid && styles.invalidInput
+          }`}
+          id="username"
+          type="text"
+        />
+        {!enteredUsernameIsValid && !isUsernameValid && (
+          <p>username must not be empty!</p>
+        )}
       </div>
       <div className={`${styles.formControl}`}>
         <label className={`${styles.formLabel}`} htmlFor="password">
-          Password
+          password
         </label>
         <input
-          className={`${styles.formInput}`}
+          onChange={(event) =>
+            dispatch({ type: "PASSWORD", val: event.currentTarget.value })
+          }
+          className={`${styles.formInput} ${
+            !enteredPasswordIsValid && !isPasswordValid && styles.invalidInput
+          }`}
           id="password"
           type="password"
         />
+        {!enteredPasswordIsValid && !isPasswordValid && (
+          <p>password must not be empty!</p>
+        )}
       </div>
 
       <div className={`${styles.aggrementContainer}`}>
-        <input className={`${styles.checkbox}`} type="checkbox" id="checkbox" />
-        <label className={`${styles.checkboxLabel}`} htmlFor="checkbox">
-          Remember my password
+        <label className={`${styles.checkboxContainer}`}>
+          remember my password
+          <input type="checkbox" />
+          <span className={`${styles.checkboxMark}`}></span>
         </label>
       </div>
 
       <button type="submit" className={`${styles.blockButton}`}>
-        continue
+        log in
       </button>
 
       <div className={`${styles.alreadyMemberContainer}`}>
         <p className={`${styles.alreadyMemberParagraph}`}>
           <Link href="/login">
             <a className={`${styles.alreadyMemberLink}`}>
-              I forgot my password :(
+              I forgot my password &#x1F625;
             </a>
           </Link>
         </p>
         <p className={`${styles.alreadyMemberParagraph}`}>
           <Link href="/signup">
-            <a className={`${styles.alreadyMemberLink}`}>Signup!</a>
+            <a className={`${styles.alreadyMemberLink}`}>signup!</a>
           </Link>
         </p>
       </div>
