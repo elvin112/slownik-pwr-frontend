@@ -4,15 +4,14 @@ const authSlice = createSlice({
   name: "auth",
   initialState: { isLoggedIn: false, token: null, expiresIn: null },
   reducers: {
-    login(state, { token, expiresIn }) {
+    login(state, action) {
       state.isLoggedIn = true;
-      state.token = token;
-      state.expiresIn = expiresIn;
+      state.token = action.payload.token;
+      state.expiresIn = action.payload.expiresIn;
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("expiresIn", expiresIn);
+      localStorage.setItem("expiresIn", action.payload.expiresIn);
+      localStorage.setItem("token", action.payload.token);
     },
-
     logout(state) {
       state.isLoggedIn = false;
       state.token = null;
