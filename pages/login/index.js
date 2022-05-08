@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Head from "next/head";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import HomeLayout from "../../components/Layout/HomeLayout";
 import Login from "../../components/AuthComponents/Login";
