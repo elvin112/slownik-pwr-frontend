@@ -28,15 +28,8 @@ function formReducer(state, action) {
 
 const Login = () => {
   const reduxDispatch = useDispatch();
-  const authState = useSelector((state) => state.auth);
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (authState.isLoggendIn) {
-      router.replace("/");
-    }
-  }, [authState.isLoggendIn]);
 
   const [formState, dispatch] = useReducer(formReducer, {
     email: "",

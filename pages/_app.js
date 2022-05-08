@@ -8,8 +8,6 @@ import "../styles/globals.css";
 
 import store from "../store/index";
 
-// TODO: Handle auto logout
-
 const ProviderWrapper = ({ children }) => {
   const authState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -37,7 +35,10 @@ const ProviderWrapper = ({ children }) => {
         );
 
         // Autologout after expiration time
-        const remainingTime = calculateRemainingTime();
+        const remainingTime = calculateRemainingTime(
+          localStorage.getItem("expiresIn")
+        );
+        console.log(remainingTime);
         setTimeout(() => {
           dispatch(authActions.logout());
         }, remainingTime);
