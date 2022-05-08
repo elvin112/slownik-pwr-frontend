@@ -1,7 +1,10 @@
 import { useReducer, useEffect, useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
+import { authActions } from "../../store/authSlice";
 import styles from "./Login.module.scss";
 
 function formReducer(state, action) {
@@ -24,7 +27,17 @@ function formReducer(state, action) {
 }
 
 const Login = () => {
-  console.log("test");
+  const reduxDispatch = useDispatch();
+  const authState = useSelector((state) => state.auth);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (authState.isLoggendIn) {
+      router.replace("/");
+    }
+  }, [authState.isLoggendIn]);
+
   const [formState, dispatch] = useReducer(formReducer, {
     email: "",
     password: "",
@@ -37,14 +50,25 @@ const Login = () => {
   const { isEmailValid } = formState;
   const { isPasswordValid } = formState;
 
-  function formSubmissionHandler(event) {
+  const formSubmissionHandler = async (event) => {
     event.preventDefault();
     if (isEmailValid && isPasswordValid) {
-      return;
+      const response = await axios.post("http://localhost:8080/auth/login", {
+        email: formState.email,
+        password: formState.password,
+      });
+
+      const token = response.data.token;
+      const expiresIn = response.data.expiresIn;
+      console.log(expiresIn);
+
+      reduxDispatch(authActions.login({ token, expiresIn }));
+
+      router.push("/");
     }
     setEnteredEmailIsValid(isEmailValid);
     setEnteredPasswordIsValid(isPasswordValid);
-  }
+  };
 
   return (
     <form className={`${styles.container}`} onSubmit={formSubmissionHandler}>
@@ -60,6 +84,7 @@ const Login = () => {
           className={`${styles.formInput} ${
             !enteredEmailIsValid && !isEmailValid && styles.invalidInput
           }`}
+          value={formState.state}
           id="email"
           type="email"
         />
@@ -78,6 +103,7 @@ const Login = () => {
           className={`${styles.formInput} ${
             !enteredPasswordIsValid && !isPasswordValid && styles.invalidInput
           }`}
+          value={formState.password}
           id="password"
           type="password"
         />
