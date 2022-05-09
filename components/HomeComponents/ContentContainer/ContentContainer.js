@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import axios from "axios";
 
 import styles from "./ContentContainer.module.scss";
@@ -21,15 +20,11 @@ const ContentContainer = ({
   totalPages,
 }) => {
   const [posts, setPosts] = useState(serverPosts);
-  const router = useRouter();
-  const [titleId, pageId] = router.query.title;
 
   // If page is not full we might miss some posts before revalidation so fetch it
   useEffect(() => {
-    if (posts.length < POSTS_PER_PAGE) {
-      fetchHelperFunc(baseUrl + currentPage, setPosts);
-    }
-  }, [baseUrl, posts.length, currentPage]);
+    fetchHelperFunc(baseUrl + currentPage, setPosts);
+  }, [baseUrl, currentPage]);
 
   // When we move to another title reset the posts according to serverProps
   useEffect(() => {
