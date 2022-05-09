@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./PaginationButtons.module.scss";
@@ -12,7 +11,7 @@ const PaginationButtons = ({ totalPages }) => {
   let tempOption;
   for (let i = 1; i < totalPages + 1; i++) {
     tempOption = (
-      <option value={i} selected={+pageId === i ? true : false}>
+      <option value={i} key={i}>
         {i.toString()}
       </option>
     );
@@ -31,10 +30,14 @@ const PaginationButtons = ({ totalPages }) => {
           +pageId === 1 ? styles.hidden : null
         }`}
       >
-        <Link href={`${titleId}/${+pageId - 1}`}>&larr;</Link>
+        <Link href={`/${titleId}/${+pageId - 1}`}>&larr;</Link>
       </div>
       <div className={`${styles.selectContainer}`}>
-        <select name="pages" onChange={selectChangeHandler}>
+        <select
+          name="pages"
+          onChange={selectChangeHandler}
+          defaultValue={+pageId}
+        >
           {options}
         </select>
       </div>
@@ -42,14 +45,14 @@ const PaginationButtons = ({ totalPages }) => {
         <span>/</span>
       </div>
       <div className={`${styles.lastPageButtonContainer}`}>
-        <Link href={`${titleId}/${totalPages}`}>{totalPages.toString()}</Link>
+        <Link href={`/${titleId}/${totalPages}`}>{totalPages.toString()}</Link>
       </div>
       <div
         className={`${styles.arrowContainer} ${
           +pageId === totalPages ? styles.hidden : null
         }`}
       >
-        <Link href={`${titleId}/${+pageId + 1}`}>&rarr;</Link>
+        <Link href={`/${titleId}/${+pageId + 1}`}>&rarr;</Link>
       </div>
     </div>
   );

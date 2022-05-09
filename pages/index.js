@@ -27,6 +27,11 @@ export async function getStaticProps() {
       throw new Error("Couldn't fetch the data");
     }
 
+    // Use this for build
+    // return {
+    //   props: {},
+    // };
+
     return {
       redirect: {
         destination: "/" + data.bestTitles[0]._id + "/1",
