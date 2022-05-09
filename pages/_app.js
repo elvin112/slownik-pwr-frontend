@@ -42,7 +42,6 @@ const ProviderWrapper = ({ children }) => {
         const remainingTime = calculateRemainingTime(
           localStorage.getItem("expiresIn")
         );
-        console.log(remainingTime);
         setTimeout(() => {
           dispatch(authActions.logout());
         }, remainingTime);

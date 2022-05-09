@@ -1,16 +1,8 @@
-1- Make pagination buttons
-
-2- Understand why build doesn't work and make it work
-
-3- Handle redux authentication with remainingTime
-
-4- Handle login signup validation
+4- Make a loading spinner and use that in components fetching states
 
 5- Create post create component
 
-3- Make redux uiNotifications and use them for error handling
 
-4- Make a loading spinner and use that in components fetching states
 
 
 
