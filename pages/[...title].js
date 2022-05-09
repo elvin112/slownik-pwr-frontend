@@ -3,7 +3,6 @@ import Head from "next/head";
 
 import HomeLayout from "../components/Layout/HomeLayout";
 import ContentContainer from "../components/HomeComponents/ContentContainer/ContentContainer";
-import { POSTS_PER_PAGE } from "../constants/constantNums";
 
 const Title = ({ titleName, posts, url, baseUrl, currentPage, totalPages }) => {
   return (

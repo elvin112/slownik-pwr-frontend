@@ -3,7 +3,6 @@ import axios from "axios";
 
 import styles from "./ContentContainer.module.scss";
 import Post from "./Post";
-import { POSTS_PER_PAGE } from "../../../constants/constantNums";
 import PaginationButtons from "../../UIComponents/pagination/PaginationButtons";
 
 const fetchHelperFunc = async (url, setPosts) => {
