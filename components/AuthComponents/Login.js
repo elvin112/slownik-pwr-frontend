@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { authActions } from "../../store/authSlice";
+import { feedbackActions } from "../../store/feedbackSlice";
 import styles from "./Login.module.scss";
 
 function formReducer(state, action) {
@@ -28,15 +29,8 @@ function formReducer(state, action) {
 
 const Login = () => {
   const reduxDispatch = useDispatch();
-  const authState = useSelector((state) => state.auth);
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (authState.isLoggendIn) {
-      router.replace("/");
-    }
-  }, [authState.isLoggendIn]);
 
   const [formState, dispatch] = useReducer(formReducer, {
     email: "",
@@ -53,18 +47,59 @@ const Login = () => {
   const formSubmissionHandler = async (event) => {
     event.preventDefault();
     if (isEmailValid && isPasswordValid) {
-      const response = await axios.post("http://localhost:8080/auth/login", {
-        email: formState.email,
-        password: formState.password,
-      });
+      try {
+        reduxDispatch(feedbackActions.loading());
 
-      const token = response.data.token;
-      const expiresIn = response.data.expiresIn;
-      console.log(expiresIn);
+        const response = await axios.post("http://localhost:8080/auth/login", {
+          email: formState.email,
+          password: formState.password,
+        });
 
-      reduxDispatch(authActions.login({ token, expiresIn }));
+        console.log(response);
 
-      router.push("/");
+        reduxDispatch(feedbackActions.success("You successfully logged in!"));
+
+        setTimeout(() => {
+          reduxDispatch(feedbackActions.cleanup());
+        }, 5000);
+
+        const token = response.data.token;
+        const expiresIn = response.data.expiresIn;
+
+        reduxDispatch(authActions.login({ token, expiresIn }));
+
+        router.push("/");
+      } catch (err) {
+        if (err.response.data.status === 401) {
+          reduxDispatch(
+            feedbackActions.error(
+              err.response.data.status + " " + err.response.data.message
+            )
+          );
+
+          setTimeout(() => {
+            reduxDispatch(feedbackActions.cleanup());
+            console.log("cleaned err 1");
+          }, 5000);
+
+          return;
+        }
+
+        if (err.response.status === 422) {
+          const firstError = err.response.data.errors.errors[0].msg;
+          reduxDispatch(
+            feedbackActions.error(err.response.status + " " + firstError)
+          );
+
+          setTimeout(() => {
+            reduxDispatch(feedbackActions.cleanup());
+
+            console.log("cleaned err 2");
+          }, 5000);
+
+          return;
+        }
+      }
     }
     setEnteredEmailIsValid(isEmailValid);
     setEnteredPasswordIsValid(isPasswordValid);

@@ -1,0 +1,90 @@
+.container {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+
+  .loadingContainer {
+    background-color: rgb(255, 213, 0);
+    border-bottom: 5px solid rgb(189, 158, 0);
+  }
+
+  .errorContainer {
+    background-color: rgb(255, 0, 0);
+    border-bottom: 5px solid rgb(193, 0, 0);
+  }
+
+  .successContainer {
+    background-color: rgb(153, 255, 0);
+    border-bottom: 5px solid rgb(118, 197, 0);
+  }
+}
+
+.innerContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 10%;
+  margin-right: 3rem;
+  height: 4rem;
+}
+
+.iconContainer {
+  margin-right: 3rem;
+  flex-grow: 0.5;
+}
+
+.icon {
+  height: 2.5rem;
+  color: rgb(24, 24, 24);
+}
+
+.rotate {
+  animation-name: rotate;
+  animation-duration: 2.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: forwards;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0turn);
+  }
+  25% {
+    transform: rotate(0.25turn);
+  }
+  50% {
+    transform: rotate(0.5turn);
+  }
+  75% {
+    transform: rotate(0.75turn);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.textContainer {
+  flex-grow: 8;
+  font-size: 2rem;
+}
+
+.buttonContainer {
+  flex-grow: 1;
+  text-align: center;
+
+  button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+  }
+
+  .exitIcon {
+    height: 2.5rem;
+  }
+}

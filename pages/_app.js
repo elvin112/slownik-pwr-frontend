@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import Head from "next/head";
 import { Provider, useSelector, useDispatch } from "react-redux";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { authActions } from "../store/authSlice";
 import { calculateRemainingTime } from "../util/remainingTime";
@@ -8,7 +10,7 @@ import "../styles/globals.css";
 
 import store from "../store/index";
 
-// TODO: Handle auto logout
+config.autoAddCss = false;
 
 const ProviderWrapper = ({ children }) => {
   const authState = useSelector((state) => state.auth);
@@ -37,7 +39,10 @@ const ProviderWrapper = ({ children }) => {
         );
 
         // Autologout after expiration time
-        const remainingTime = calculateRemainingTime();
+        const remainingTime = calculateRemainingTime(
+          localStorage.getItem("expiresIn")
+        );
+        console.log(remainingTime);
         setTimeout(() => {
           dispatch(authActions.logout());
         }, remainingTime);

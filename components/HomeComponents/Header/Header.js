@@ -43,7 +43,9 @@ const Header = () => {
 
   return (
     <div className={`${styles.container}`}>
-      <p>Slownik PWR</p>
+      <Link href="/">
+        <a className={`${styles.a}`}>Slownik PWR</a>
+      </Link>
       <div>Searchbar</div>
       {dynamicMenuItems}
     </div>
