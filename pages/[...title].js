@@ -1,4 +1,5 @@
 import axios from "axios";
+import Head from "next/head";
 
 import HomeLayout from "../components/Layout/HomeLayout";
 import ContentContainer from "../components/HomeComponents/ContentContainer/ContentContainer";
@@ -6,15 +7,20 @@ import { POSTS_PER_PAGE } from "../constants/constantNums";
 
 const Title = ({ titleName, posts, url, baseUrl, currentPage, totalPages }) => {
   return (
-    <HomeLayout>
-      <ContentContainer
-        titleName={titleName}
-        serverPosts={posts}
-        baseUrl={baseUrl}
-        currentPage={currentPage}
-        totalPages={totalPages}
-      />
-    </HomeLayout>
+    <>
+      <Head>
+        <title>{titleName}</title>
+      </Head>
+      <HomeLayout>
+        <ContentContainer
+          titleName={titleName}
+          serverPosts={posts}
+          baseUrl={baseUrl}
+          currentPage={currentPage}
+          totalPages={totalPages}
+        />
+      </HomeLayout>
+    </>
   );
 };
 
@@ -23,21 +29,18 @@ export default Title;
 // All the titles and pages of the titles added to static paths
 export const getStaticPaths = async () => {
   // Fetch all the titles
-  const result = await axios.get("http://localhost:8080/posts/all-titles");
+  const result = await axios.get("http://localhost:8080/posts/all-best-titles");
 
-  // Store all the possible path parameters in fetchedParams
-  const allTitles = result.data;
+  // Store all best title urls in fetchedParams
+  const allBestTitles = result.data;
   const fetchedParams = [];
 
-  for (let i = 0; i < allTitles.length; i++) {
-    const maxPage = Math.floor(allTitles[i].length / POSTS_PER_PAGE) + 1;
-
-    for (let j = 0; j < maxPage; j++) {
-      fetchedParams.push({
-        params: { title: [allTitles[i]._id, (j + 1).toString()] },
-      });
-    }
-  }
+  // For each popular title add them to fetchedParams with next.js syntax
+  allBestTitles.result.forEach((titleUrl) => {
+    fetchedParams.push({
+      params: { title: [titleUrl, "1"] },
+    });
+  });
 
   return {
     paths: fetchedParams,
@@ -55,9 +58,7 @@ export async function getStaticProps(context) {
   try {
     const baseUrl = `http://localhost:8080/posts/title/${titleId}?pId=`;
 
-    const url = `http://localhost:8080/posts/title/${titleId}?pId=${
-      pageId || 1
-    }`;
+    const url = `${baseUrl}${pageId || 1}`;
 
     // Make request to each one of the parameters coming from getStaticParams
     const result = await axios.get(url);
