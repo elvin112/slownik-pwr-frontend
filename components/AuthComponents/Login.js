@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useState } from "react";
+import { useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Link from "next/link";
@@ -121,7 +121,7 @@ const Login = () => {
           }`}
           value={formState.state}
           id="email"
-          type="email"
+          type="text"
         />
         {!enteredEmailIsValid && !isEmailValid && (
           <p>email must not be empty!</p>
