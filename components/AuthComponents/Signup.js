@@ -18,7 +18,7 @@ function formReducer(state, action) {
         ...state,
         email: action.val,
         isEmailValid:
-          action.val.trim().length > 11 &&
+          !action.val.trim().startsWith("@") &&
           (action.val.trim().endsWith("@student.pwr.edu.pl") ||
             action.val.trim().endsWith("@pwr.edu.pl")),
       };
