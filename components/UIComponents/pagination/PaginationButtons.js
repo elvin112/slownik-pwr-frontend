@@ -1,10 +1,11 @@
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./PaginationButtons.module.scss";
 
-const PaginationButtons = ({ totalPages }) => {
+const PaginationButtons = ({ totalPages, currentPage }) => {
   const router = useRouter();
-  const [titleId, pageId] = router.query.title;
+  const [titleId, _] = router.query.title;
 
   // Make page options of all pages with selected={true, false}
   const options = [];
@@ -27,16 +28,16 @@ const PaginationButtons = ({ totalPages }) => {
     <div className={`${styles.container}`}>
       <div
         className={`${styles.arrowContainer} ${
-          +pageId === 1 ? styles.hidden : null
+          +currentPage === 1 ? styles.hidden : null
         }`}
       >
-        <Link href={`/${titleId}/${+pageId - 1}`}>&larr;</Link>
+        <Link href={`/${titleId}/${+currentPage - 1}`}>&larr;</Link>
       </div>
       <div className={`${styles.selectContainer}`}>
         <select
           name="pages"
           onChange={selectChangeHandler}
-          defaultValue={+pageId}
+          value={+currentPage}
         >
           {options}
         </select>
@@ -49,10 +50,10 @@ const PaginationButtons = ({ totalPages }) => {
       </div>
       <div
         className={`${styles.arrowContainer} ${
-          +pageId === totalPages ? styles.hidden : null
+          +currentPage === totalPages ? styles.hidden : null
         }`}
       >
-        <Link href={`/${titleId}/${+pageId + 1}`}>&rarr;</Link>
+        <Link href={`/${titleId}/${+currentPage + 1}`}>&rarr;</Link>
       </div>
     </div>
   );

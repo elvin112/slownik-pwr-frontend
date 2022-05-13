@@ -4,7 +4,15 @@ import Head from "next/head";
 import HomeLayout from "../components/Layout/HomeLayout";
 import ContentContainer from "../components/HomeComponents/ContentContainer/ContentContainer";
 
-const Title = ({ titleName, posts, url, baseUrl, currentPage, totalPages }) => {
+const Title = ({
+  titleName,
+  posts,
+  url,
+  baseUrl,
+  currentPage,
+  totalPages,
+  totalPosts,
+}) => {
   return (
     <>
       <Head>
@@ -17,6 +25,7 @@ const Title = ({ titleName, posts, url, baseUrl, currentPage, totalPages }) => {
           baseUrl={baseUrl}
           currentPage={currentPage}
           totalPages={totalPages}
+          totalPosts={totalPosts}
         />
       </HomeLayout>
     </>
@@ -75,6 +84,7 @@ export async function getStaticProps(context) {
         baseUrl,
         currentPage: pageId,
         totalPages: data.totalPages,
+        totalPosts: data.totalPosts,
       },
       revalidate: 60,
     };

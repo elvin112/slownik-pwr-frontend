@@ -2,7 +2,7 @@
   height: 100%;
   width: 100%;
   padding: 0rem 4rem;
-  background-color: lightgray;
+  margin-bottom: 25rem;
 }
 
 .titleContainer {
@@ -16,4 +16,9 @@
 .paginationButtonsContainer {
   width: 100%;
   height: 3rem;
+}
+
+.createPostContainer {
+  margin-top: 2rem;
+  width: 100%;
 }

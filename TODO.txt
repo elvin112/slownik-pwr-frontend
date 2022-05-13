@@ -2,6 +2,10 @@
 
 5- Create post create component
 
+5- Make title counters switch with buttons (day counter, week counter etc.) Also think if all of it is 0 what will happen
+
+6- make the mongodb scripts the counter cleanup and text search
+
 
 
 
