@@ -79,7 +79,6 @@ const Login = () => {
 
           setTimeout(() => {
             reduxDispatch(feedbackActions.cleanup());
-            console.log("cleaned err 1");
           }, 5000);
 
           return;

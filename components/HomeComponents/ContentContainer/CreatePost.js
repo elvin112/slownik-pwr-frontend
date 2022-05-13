@@ -4,6 +4,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./CreatePost.module.scss";
+import { feedbackActions } from "../../../store/feedbackSlice";
 
 const CreatePost = ({ setNewPost }) => {
   const [post, setPost] = useState();
@@ -37,6 +38,26 @@ const CreatePost = ({ setNewPost }) => {
       setNewPost(data.response);
       setPost("");
     } catch (err) {
+      if (err.response.status === 422) {
+        dispatch(
+          feedbackActions.error(
+            err.response.status + " " + err.response.data.errors.errors[0].msg
+          )
+        );
+      }
+
+      if (err.response.status === 500) {
+        dispatch(
+          feedbackActions.error(
+            err.response.data.status + " " + err.response.data.message
+          )
+        );
+      }
+
+      setTimeout(() => {
+        dispatch(feedbackActions.cleanup());
+      }, 5000);
+
       console.log(err.response);
     }
   };
