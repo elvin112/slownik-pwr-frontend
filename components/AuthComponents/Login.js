@@ -28,9 +28,13 @@ function formReducer(state, action) {
 }
 
 const Login = () => {
+
   const reduxDispatch = useDispatch();
 
   const router = useRouter();
+
+
+  console.log("TEST!!!");
 
   const [formState, dispatch] = useReducer(formReducer, {
     email: "",
@@ -120,7 +124,7 @@ const Login = () => {
           }`}
           value={formState.state}
           id="email"
-          type="email"
+          type="text"
         />
         {!enteredEmailIsValid && !isEmailValid && (
           <p>email must not be empty!</p>
