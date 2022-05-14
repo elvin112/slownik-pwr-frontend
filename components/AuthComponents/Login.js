@@ -65,8 +65,9 @@ const Login = () => {
 
         const token = response.data.token;
         const expiresIn = response.data.expiresIn;
+        const username = response.data.username;
 
-        reduxDispatch(authActions.login({ token, expiresIn }));
+        reduxDispatch(authActions.login({ token, expiresIn, username }));
 
         router.push("/");
       } catch (err) {

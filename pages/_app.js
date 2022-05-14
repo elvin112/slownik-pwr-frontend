@@ -35,6 +35,7 @@ const ProviderWrapper = ({ children }) => {
           authActions.login({
             token: localStorage.getItem("token"),
             expiresIn: localStorage.getItem("expiresIn"),
+            username: localStorage.getItem("username"),
           })
         );
 
