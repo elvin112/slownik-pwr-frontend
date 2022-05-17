@@ -17,10 +17,10 @@ const Header = () => {
   const loginMenuItemsJsx = (
     <>
       <Link href="/login">
-        <a>Login</a>
+        <a>login</a>
       </Link>
       <Link href="/signup">
-        <a>Signup</a>
+        <a>signup</a>
       </Link>
     </>
   );
@@ -43,10 +43,17 @@ const Header = () => {
 
   return (
     <div className={`${styles.container}`}>
-      <Link href="/">
-        <a className={`${styles.a}`}>Slownik PWR</a>
-      </Link>
-      <div>Searchbar</div>
+      <div className={styles.logoContainer}>
+        <Link href="/">
+          <a className={`${styles.a}`}>
+            słownik <span>PWR</span>
+          </a>
+        </Link>
+      </div>
+
+      <div className={styles.searchbarContainer}>
+        <input type="search" />
+      </div>
       {dynamicMenuItems}
     </div>
   );
