@@ -99,7 +99,7 @@ const ContentContainer = ({
 
   // Return the jsx of ContentContainer
   return (
-    <div className={`${styles.container}`}>
+    <>
       <div className={`${styles.titleContainer}`}>
         <p className={`${styles.title}`}>{titleName}</p>
       </div>
@@ -111,7 +111,7 @@ const ContentContainer = ({
           <CreatePost setNewPost={setNewPost} />
         </div>
       ) : null}
-    </div>
+    </>
   );
 };
 
