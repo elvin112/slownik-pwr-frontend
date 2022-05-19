@@ -12,7 +12,6 @@ const CreatePost = ({ setNewPost }) => {
   const router = useRouter();
 
   const authState = useSelector((state) => state.auth);
-  const feedbackState = useSelector((state) => state.feedback);
 
   const textAreaChangeHandler = (event) => {
     setPost(event.target.value);

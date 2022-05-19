@@ -1,12 +1,10 @@
-4- Make a loading spinner and use that in components fetching states
+1- complete update and delete functionality
 
-5- Make error handling for create post functionality
+2- complete create new title functionality and add also option with button
 
-5- Create update and delete functionality with existing post create component
+3- create a users page where you list their posts, make usernames link for that page
 
-5- Make title counters switch with buttons (day counter, week counter etc.) Also think if all of it is 0 what will happen
-
-6- make the mongodb scripts the counter cleanup and text search
+4- make home page show some posts from the first page
 
 
 
@@ -22,22 +20,3 @@ import LoadingSpinner from "../components/HomeComponents/ui/loadingSpinner/Loadi
       {createPortal(<LoadingSpinner />, document.querySelector("#overlays"))}
 
 
-// TODO
-// 1- make Login function with local storage
-// 2- make in initial login using the stored token makes the login connection
-// 3- make auto-logout feature with expiresIn
-
-
-
-
-
-Archived
-
-
-4- Populate content and the navbar using backend
-
-5- Add pagination
-
-6- Add getStaticProps and getStaticPaths to the dynamic Posts Screen
-
-7- Create an icon for the app and use that one in public

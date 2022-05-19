@@ -59,7 +59,7 @@ const Login = () => {
 
         setTimeout(() => {
           reduxDispatch(feedbackActions.cleanup());
-        }, 5000);
+        }, 3000);
 
         const token = response.data.token;
         const expiresIn = response.data.expiresIn;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEllipsis,
@@ -9,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./Post.module.scss";
+import { feedbackActions } from "../../../store/feedbackSlice";
 
 const dateConverter = (isoString) => {
   const date = new Date(isoString);
@@ -22,10 +24,14 @@ const dateConverter = (isoString) => {
   return `${dt}.${month}.${year} ${hours}:${minutes}`;
 };
 
-const Post = ({ date, postContent, username }) => {
+const Post = ({ date, postContent, username, postId }) => {
   const authState = useSelector((state) => state.auth);
   const [optionsState, setOptionsState] = useState();
   const [isOptionsExpanded, setIsOptionsExpanded] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [updatePost, setUpdatePost] = useState(postContent);
+
+  const dispatch = useDispatch();
 
   // Check the state of authentication and render correct options list by that
   useEffect(() => {
@@ -37,23 +43,80 @@ const Post = ({ date, postContent, username }) => {
     setOptionsState(notAuthenticatedDetailsOptions);
   }, [authState, isOptionsExpanded]);
 
-  // Add body event listener to recollapse when the body is clicked
-  // useEffect(() => {
-  //   const bodyClickedEventListener = () => {
-  //     if (isOptionsExpanded) {
-  //       setIsOptionsExpanded(false);
-  //     }
-  //   };
-
-  //   document.body.addEventListener("click", bodyClickedEventListener);
-
-  //   return function cleanup() {
-  //     window.removeEventListener("click", bodyClickedEventListener);
-  //   };
-  // }, [isOptionsExpanded]);
-
   const optionsToggleHandler = () => {
     setIsOptionsExpanded((state) => !state);
+  };
+
+  const updateHandler = () => {
+    setIsUpdate(true);
+    setIsOptionsExpanded(false);
+  };
+
+  const updateContentHandler = (event) => {
+    setUpdatePost(event.target.value);
+  };
+
+  const updateCancelButtonHandler = () => {
+    setUpdatePost(postContent);
+    setIsUpdate(false);
+  };
+
+  const updateUpdateButtonHandler = async () => {
+    try {
+      dispatch(feedbackActions.loading());
+
+      if (updatePost === postContent) {
+        throw new Error("Updated post is same as the old one");
+      }
+
+      const response = await axios.put(
+        "http://localhost:8080/posts/post",
+        {
+          postId: postId,
+          postContent: updatePost,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + authState.token,
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        dispatch(feedbackActions.success("Post content successfully updated!"));
+        setIsUpdate(false);
+
+        setTimeout(() => {
+          dispatch(feedbackActions.cleanup());
+        }, 3000);
+      }
+    } catch (err) {
+      if (err && !err.response) {
+        dispatch(feedbackActions.error(err.message));
+
+        setTimeout(() => {
+          dispatch(feedbackActions.cleanup());
+        }, 5000);
+        return;
+      }
+
+      if (err.response && err.response.status === 422) {
+        const firstError = err.response.data.errors.errors[0].msg;
+        dispatch(feedbackActions.error(firstError));
+
+        setTimeout(() => {
+          dispatch(feedbackActions.cleanup());
+        }, 5000);
+
+        return;
+      }
+
+      dispatch(feedbackActions.error("Unexpected Error"));
+
+      setTimeout(() => {
+        dispatch(feedbackActions.cleanup());
+      }, 5000);
+    }
   };
 
   const notAuthenticatedDetailsOptions = (
@@ -80,8 +143,8 @@ const Post = ({ date, postContent, username }) => {
       }`}
     >
       <ul>
-        <li>
-          <button>
+        <li className={`${styles.optionLi}`}>
+          <button onClick={updateHandler}>
             <p>Update</p>
             <FontAwesomeIcon
               icon={faMarker}
@@ -89,7 +152,7 @@ const Post = ({ date, postContent, username }) => {
             />
           </button>
         </li>
-        <li>
+        <li className={`${styles.optionLi}`}>
           <button>
             <p>Delete</p>
             <FontAwesomeIcon
@@ -98,7 +161,7 @@ const Post = ({ date, postContent, username }) => {
             />
           </button>
         </li>
-        <li>
+        <li className={`${styles.optionLi}`}>
           <button>
             <p>Report</p>
             <FontAwesomeIcon icon={faFlag} className={`${styles.optionIcon}`} />
@@ -108,10 +171,28 @@ const Post = ({ date, postContent, username }) => {
     </div>
   );
 
+  const updateJsx = (
+    <>
+      <textarea
+        className={`${styles.textArea}`}
+        value={updatePost}
+        onChange={updateContentHandler}
+      />
+      <div className={`${styles.updateButtonsContainer}`}>
+        <button onClick={updateCancelButtonHandler}>cancel</button>
+        <button onClick={updateUpdateButtonHandler}>update</button>
+      </div>
+    </>
+  );
+
   return (
     <div className={`${styles.container}`}>
-      <div className={`${styles.upperContainer}`}>
-        <p>{postContent}</p>
+      <div
+        className={`${
+          !isUpdate ? styles.upperContainer : styles.updateContainer
+        }`}
+      >
+        {!isUpdate ? <p>{updatePost}</p> : updateJsx}
       </div>
       <div className={`${styles.lowerContainer}`}>
         <div className={`${styles.date}`}>

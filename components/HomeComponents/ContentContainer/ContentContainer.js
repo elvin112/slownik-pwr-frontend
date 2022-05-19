@@ -49,7 +49,6 @@ const ContentContainer = ({
     if (newPost) {
       // Check if last page is full to decide which page to go
       const isLastPageFullOfPosts = totalPosts % 7 === 0;
-      console.log(+currentPage, totalPages);
 
       if (isLastPageFullOfPosts) {
         router.push(frontendTitleId + "/" + (totalPages + 1).toString());
@@ -87,6 +86,7 @@ const ContentContainer = ({
         date={post.date}
         postContent={post.content}
         username={post.userId.username}
+        postId={post._id}
       />
     );
   });
