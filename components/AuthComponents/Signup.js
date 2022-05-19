@@ -1,5 +1,10 @@
 import Link from "next/link";
 import { useReducer, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+
+import { feedbackActions } from "../../store/feedbackSlice";
 
 import styles from "./Signup.module.scss";
 
@@ -40,6 +45,9 @@ function formReducer(state, action) {
 }
 
 const Signup = () => {
+  const reduxDispatch = useDispatch();
+  const router = useRouter();
+
   const [formState, dispatch] = useReducer(formReducer, {
     username: "",
     email: "",
@@ -70,6 +78,46 @@ const Signup = () => {
       isPasswordValid &&
       isConfirmPasswordValid
     ) {
+      try {
+        reduxDispatch(feedbackActions.loading());
+
+        const response = await axios.post("http://localhost:8080/auth/signup", {
+          username: formState.username,
+          email: formState.email,
+          password: formState.password,
+          confirmPassword: formState.confirmPassword,
+        });
+
+        reduxDispatch(feedbackActions.success("You successfully signed up!"));
+
+        setTimeout(() => {
+          reduxDispatch(feedbackActions.cleanup());
+        }, 5000);
+
+        router.push("/login");
+      } catch (err) {
+        if (err.status === 500) {
+          reduxDispatch(feedbackActions.error(err.data.message));
+
+          setTimeout(() => {
+            reduxDispatch(feedbackActions.cleanup());
+          }, 5000);
+
+          return;
+        }
+
+        if (err.response.status === 422) {
+          const firstError = err.response.data.errors.errors[0].msg;
+          console.log(firstError);
+          reduxDispatch(feedbackActions.error(firstError));
+
+          setTimeout(() => {
+            reduxDispatch(feedbackActions.cleanup());
+          }, 5000);
+
+          return;
+        }
+      }
     }
 
     setEnteredUsernameIsValid(isUsernameValid);

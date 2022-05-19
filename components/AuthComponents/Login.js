@@ -28,13 +28,9 @@ function formReducer(state, action) {
 }
 
 const Login = () => {
-
   const reduxDispatch = useDispatch();
 
   const router = useRouter();
-
-
-  console.log("TEST!!!");
 
   const [formState, dispatch] = useReducer(formReducer, {
     email: "",
@@ -59,8 +55,6 @@ const Login = () => {
           password: formState.password,
         });
 
-        console.log(response);
-
         reduxDispatch(feedbackActions.success("You successfully logged in!"));
 
         setTimeout(() => {
@@ -76,11 +70,7 @@ const Login = () => {
         router.push("/");
       } catch (err) {
         if (err.response.data.status === 401) {
-          reduxDispatch(
-            feedbackActions.error(
-              err.response.data.status + " " + err.response.data.message
-            )
-          );
+          reduxDispatch(feedbackActions.error(err.response.data.message));
 
           setTimeout(() => {
             reduxDispatch(feedbackActions.cleanup());
@@ -91,14 +81,10 @@ const Login = () => {
 
         if (err.response.status === 422) {
           const firstError = err.response.data.errors.errors[0].msg;
-          reduxDispatch(
-            feedbackActions.error(err.response.status + " " + firstError)
-          );
+          reduxDispatch(feedbackActions.error(firstError));
 
           setTimeout(() => {
             reduxDispatch(feedbackActions.cleanup());
-
-            console.log("cleaned err 2");
           }, 5000);
 
           return;
