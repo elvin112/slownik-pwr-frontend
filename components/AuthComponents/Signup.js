@@ -92,7 +92,7 @@ const Signup = () => {
 
         setTimeout(() => {
           reduxDispatch(feedbackActions.cleanup());
-        }, 5000);
+        }, 3000);
 
         router.push("/login");
       } catch (err) {

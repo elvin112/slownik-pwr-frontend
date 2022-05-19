@@ -9,9 +9,48 @@
 }
 
 .upperContainer {
-  flex: 1;
   padding: 2rem 0;
   font-weight: 400;
+}
+
+.updateContainer {
+  height: 15rem;
+  width: 100%;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.textArea {
+  height: 100%;
+  width: 100%;
+  background-color: #f8f9fa;
+
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 2rem;
+  font-family: inherit;
+  font-size: inherit;
+  font-size: 1.4rem;
+}
+
+.updateButtonsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
 }
 
 .lowerContainer {
@@ -48,20 +87,30 @@
   position: absolute;
   top: 3rem;
   left: 0;
+  border-radius: 5px;
 
   ul {
     list-style-type: none;
-    padding: 0 0.5rem;
     margin-top: -0.5rem;
 
     li {
       height: 2rem;
+      padding: 0 0.5rem;
+
+      &,
+      & > * {
+        color: black;
+        &:hover {
+          background-color: #b32216;
+          color: white;
+        }
+      }
 
       button {
         width: 100%;
         height: 100%;
 
-        background: none;
+        background: white;
         color: inherit;
         border: none;
         padding: 0;
@@ -84,6 +133,15 @@
 .optionIcon {
   font-size: 1.2rem;
   color: #b32216;
+}
+
+.optionLi:hover .optionIcon {
+  color: white;
+}
+
+.optionLi:hover button {
+  background-color: #b32216;
+  color: white;
 }
 
 .hidden {
