@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -11,6 +13,7 @@ import {
 
 import styles from "./Post.module.scss";
 import { feedbackActions } from "../../../store/feedbackSlice";
+import Modal from "../../UIComponents/modal/Modal";
 
 const dateConverter = (isoString) => {
   const date = new Date(isoString);
@@ -30,8 +33,11 @@ const Post = ({ date, postContent, username, postId }) => {
   const [isOptionsExpanded, setIsOptionsExpanded] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [updatePost, setUpdatePost] = useState(postContent);
+  const [isDeleteConfirm, setIsDeleteConfirm] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   // Check the state of authentication and render correct options list by that
   useEffect(() => {
@@ -42,6 +48,59 @@ const Post = ({ date, postContent, username, postId }) => {
 
     setOptionsState(notAuthenticatedDetailsOptions);
   }, [authState, isOptionsExpanded]);
+
+  useEffect(() => {
+    const deleteRequest = async () => {
+      try {
+        dispatch(feedbackActions.loading());
+
+        const response = await axios.delete(
+          "http://localhost:8080/posts/post/" + postId,
+          {
+            headers: {
+              Authorization: "Bearer " + authState.token,
+            },
+          }
+        );
+
+        if (response.status === 201) {
+          dispatch(feedbackActions.success("Post is successfully deleted"));
+
+          setTimeout(() => {
+            dispatch(feedbackActions.cleanup());
+          }, 3000);
+
+          router.push(router.asPath);
+        }
+      } catch (err) {
+        if (err.response.status === 401) {
+          dispatch(feedbackActions.error(err.response.data.message));
+          setTimeout(() => {
+            dispatch(feedbackActions.cleanup());
+          }, 5000);
+
+          return;
+        }
+
+        if (err.response.status === 500) {
+          dispatch(feedbackActions.error(err.response.data.message));
+          setTimeout(() => {
+            dispatch(feedbackActions.cleanup());
+          }, 5000);
+
+          return;
+        }
+
+        dispatch(feedbackActions.error(err.message));
+        setTimeout(() => {
+          dispatch(feedbackActions.cleanup());
+        }, 5000);
+      }
+    };
+    if (isDeleteConfirm) {
+      deleteRequest();
+    }
+  }, [isDeleteConfirm]);
 
   const optionsToggleHandler = () => {
     setIsOptionsExpanded((state) => !state);
@@ -119,6 +178,18 @@ const Post = ({ date, postContent, username, postId }) => {
     }
   };
 
+  const deleteHandler = (async) => {
+    // TODO:
+    // Create a UI modal component
+    // Ask user if really wants to delete
+    // Send setIsDelete to the modal
+    // Here add a useEffect that listens for isDelete
+    // When it changed directly send a delete request
+    // createPortal(<Modal />, document.querySelector("#overlays"));
+    setIsDelete(true);
+    setIsOptionsExpanded(false);
+  };
+
   const notAuthenticatedDetailsOptions = (
     <div
       className={`${styles.optionsContainer} ${
@@ -153,7 +224,7 @@ const Post = ({ date, postContent, username, postId }) => {
           </button>
         </li>
         <li className={`${styles.optionLi}`}>
-          <button>
+          <button onClick={deleteHandler}>
             <p>Delete</p>
             <FontAwesomeIcon
               icon={faTrashCan}
@@ -186,32 +257,48 @@ const Post = ({ date, postContent, username, postId }) => {
   );
 
   return (
-    <div className={`${styles.container}`}>
-      <div
-        className={`${
-          !isUpdate ? styles.upperContainer : styles.updateContainer
-        }`}
-      >
-        {!isUpdate ? <p>{updatePost}</p> : updateJsx}
+    <>
+      {isDelete
+        ? createPortal(
+            <Modal
+              setState={setIsDeleteConfirm}
+              setCloseModel={setIsDelete}
+              title="Warning"
+              text="Are you sure that you want to delete this post?"
+              cancelButtonText="cancel"
+              confirmButtonText="delete"
+              areButtonsOpposite={false}
+            />,
+            document.querySelector("#overlays")
+          )
+        : null}
+      <div className={`${styles.container}`}>
+        <div
+          className={`${
+            !isUpdate ? styles.upperContainer : styles.updateContainer
+          }`}
+        >
+          {!isUpdate ? <p>{updatePost}</p> : updateJsx}
+        </div>
+        <div className={`${styles.lowerContainer}`}>
+          <div className={`${styles.date}`}>
+            <p>{dateConverter(date)}</p>
+          </div>
+          <div className={`${styles.username}`}>
+            <p>{username}</p>
+          </div>
+          <div className={`${styles.iconContainer}`}>
+            <button
+              className={`${styles.iconButton}`}
+              onClick={optionsToggleHandler}
+            >
+              <FontAwesomeIcon icon={faEllipsis} className={`${styles.icon}`} />
+            </button>
+            {optionsState}
+          </div>
+        </div>
       </div>
-      <div className={`${styles.lowerContainer}`}>
-        <div className={`${styles.date}`}>
-          <p>{dateConverter(date)}</p>
-        </div>
-        <div className={`${styles.username}`}>
-          <p>{username}</p>
-        </div>
-        <div className={`${styles.iconContainer}`}>
-          <button
-            className={`${styles.iconButton}`}
-            onClick={optionsToggleHandler}
-          >
-            <FontAwesomeIcon icon={faEllipsis} className={`${styles.icon}`} />
-          </button>
-          {optionsState}
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 
