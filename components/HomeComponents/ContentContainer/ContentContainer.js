@@ -87,6 +87,7 @@ const ContentContainer = ({
         postContent={post.content}
         username={post.userId.username}
         postId={post._id}
+        totalPosts={totalPosts}
       />
     );
   });
