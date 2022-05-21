@@ -46,7 +46,7 @@ const Header = () => {
       <div className={styles.logoContainer}>
         <Link href="/">
           <a className={`${styles.a}`}>
-            słownik <span>PWR</span>
+            Słownik<span>PWR</span>
           </a>
         </Link>
       </div>

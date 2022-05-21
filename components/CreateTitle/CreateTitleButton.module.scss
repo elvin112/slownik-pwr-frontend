@@ -1,0 +1,17 @@
+.container {
+  width: 100%;
+  padding: 0.8rem 0;
+  background-color: #b32216;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 2rem;
+}
+
+a.anchorLink {
+  color: white;
+  font-size: 2rem;
+}

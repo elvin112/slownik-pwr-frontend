@@ -1,3 +1,4 @@
+import CreateTitleButton from "../CreateTitle/CreateTitleButton";
 import Header from "../HomeComponents/Header/Header";
 import Sidebar from "../HomeComponents/Sidebar/Sidebar";
 import Feedback from "../UIComponents/feedback/Feedback";
@@ -11,7 +12,10 @@ const HomeLayout = ({ children }) => {
       <div className={`${styles.container}`}>
         <Header />
         <div className={`${styles.subContainer}`}>
-          <Sidebar />
+          <div className={`${styles.leftContainer}`}>
+            <CreateTitleButton />
+            <Sidebar />
+          </div>
           <div className={`${styles.childrenContainer}`}>{children}</div>
         </div>
       </div>
