@@ -1,8 +1,7 @@
-1- complete update and delete functionality
-
-// Fix login and signup errors for feedback
 
 2- complete create new title functionality and add also option with button
+
+2- When delete the last post in a title fix delete whole title error
 
 3- create a users page where you list their posts, make usernames link for that page
 

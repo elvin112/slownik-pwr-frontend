@@ -111,8 +111,10 @@ const Post = ({ date, postContent, username, postId }) => {
     setIsOptionsExpanded(false);
   };
 
-  const updateContentHandler = (event) => {
-    setUpdatePost(event.target.value);
+  const updateContentHandler = (e) => {
+    setUpdatePost(e.target.value);
+    e.target.style.height = "inherit";
+    e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
   const updateCancelButtonHandler = () => {
@@ -179,13 +181,6 @@ const Post = ({ date, postContent, username, postId }) => {
   };
 
   const deleteHandler = (async) => {
-    // TODO:
-    // Create a UI modal component
-    // Ask user if really wants to delete
-    // Send setIsDelete to the modal
-    // Here add a useEffect that listens for isDelete
-    // When it changed directly send a delete request
-    // createPortal(<Modal />, document.querySelector("#overlays"));
     setIsDelete(true);
     setIsOptionsExpanded(false);
   };

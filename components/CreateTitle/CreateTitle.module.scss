@@ -1,3 +1,52 @@
 .form {
-  background-color: red;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  & > * {
+    margin-bottom: 2.5rem;
+  }
+}
+
+.inputGroup {
+  p {
+    font-size: 1.2rem;
+    color: #cf1100;
+  }
+}
+
+.titleInput {
+  font-size: 4rem;
+
+  border: none;
+  background-color: transparent;
+  outline: none;
+
+  &::placeholder {
+    font-family: "Source Sans Pro", sans-serif;
+  }
+}
+
+.postInput {
+  font-size: 2rem;
+  height: 4rem;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  resize: none;
+
+  &::placeholder {
+    font-family: "Source Sans Pro", sans-serif;
+  }
+}
+
+.submitButton {
+  font-size: 2rem;
+  width: fit-content;
+  cursor: pointer;
+
+  border: none;
+  background-color: transparent;
+  outline: none;
 }
