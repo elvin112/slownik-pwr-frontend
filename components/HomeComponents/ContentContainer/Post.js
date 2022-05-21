@@ -27,7 +27,7 @@ const dateConverter = (isoString) => {
   return `${dt}.${month}.${year} ${hours}:${minutes}`;
 };
 
-const Post = ({ date, postContent, username, postId }) => {
+const Post = ({ date, postContent, username, postId, totalPosts }) => {
   const authState = useSelector((state) => state.auth);
   const [optionsState, setOptionsState] = useState();
   const [isOptionsExpanded, setIsOptionsExpanded] = useState(false);
@@ -70,7 +70,11 @@ const Post = ({ date, postContent, username, postId }) => {
             dispatch(feedbackActions.cleanup());
           }, 3000);
 
-          router.push(router.asPath);
+          if (totalPosts > 1) {
+            router.push(router.asPath);
+          } else {
+            router.push("/");
+          }
         }
       } catch (err) {
         if (err.response.status === 401) {
