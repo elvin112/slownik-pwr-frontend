@@ -66,6 +66,7 @@ const CreatePost = ({ setNewPost }) => {
       <textarea
         className={`${styles.textArea}`}
         value={post}
+        placeholder="Write a new post:"
         onChange={textAreaChangeHandler}
       />
       <div className={`${styles.addButtonContainer}`}>

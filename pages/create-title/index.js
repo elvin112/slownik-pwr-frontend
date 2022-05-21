@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { feedbackActions } from "../../store/feedbackSlice";
 import HomeLayout from "../../components/Layout/HomeLayout";
+import CreateTitle from "../../components/CreateTitle/CreateTitle";
 
 const CreateTitleScreen = () => {
   const router = useRouter();
@@ -34,7 +35,9 @@ const CreateTitleScreen = () => {
       <Head>
         <title>Create new title</title>
       </Head>
-      <HomeLayout></HomeLayout>
+      <HomeLayout>
+        <CreateTitle />
+      </HomeLayout>
     </>
   );
 };
