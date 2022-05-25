@@ -1,13 +1,8 @@
-
-2- complete create new title functionality and add also option with button
-      First add a new title button then,
-      When delete the last post in a title fix delete whole title error
+Fix the sidebar title refresh bug (it doesn't refresh in new title or title deletion) with redux
 
 3- create a users page where you list their posts, make usernames link for that page
 
 4- make home page show some posts from the first page
-
-
 
 
 Bugs:
