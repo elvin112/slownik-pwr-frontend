@@ -10,23 +10,87 @@
   padding-top: 23px;
   padding-bottom: 25px;
   font-weight: 600;
+  padding-left: 3%;
+  padding-right: 3%;
 }
 
 .logoContainer {
-  margin-left: 5%;
   font-size: 30px;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  width: 20%;
 }
 .logoContainer span {
   color: #b32216;
 }
 
 .searchbarContainer {
-  margin-left: 8%;
-  width: 48%;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 49.3%;
+  padding: 0 4rem;
 }
 
-.searchbarContainer input {
-  width: 100%;
+.searchInput {
+  width: 83.5%;
+  padding: 0.5rem 0;
+  padding-inline-start: 1rem;
+  border: 1px solid #b32216;
+  border-radius: 6px;
+  float: left;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.searchButton {
+  width: 6.9%;
+  border: 1px solid #b32216;
+  background-color: #b32216;
+  border-radius: 6px;
+  padding: 0.1rem 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.searchButtonResultContainer {
+  background-color: white;
+  width: 36.6%;
+  overflow-y: scroll;
+  position: absolute;
+  border: 1px solid #b32216;
+  height: 50vh;
+}
+
+.searchWindowHeader {
+  display: flex;
+}
+
+.searchWindowHeader button {
+  background-color: white;
+  padding: 0.1rem 1rem;
+  border: 1px solid #b32216;
+  float: left;
+}
+
+.searchWindowContent {
+  padding: 1rem;
+  font-weight: 500;
+}
+
+.searchWindowContent li {
+  font-size: 4 !important;
+}
+
+.headerNav {
+  padding-left: 5rem;
+}
+
+.headerNav a {
+  margin: 2rem;
+  text-decoration: none;
+  color: black;
+  font-size: 15px !important;
+  font-weight: 700 !important;
 }
 
 .a {
