@@ -49,7 +49,6 @@ const Header = () => {
     );
 
     const data = await response.json();
-    console.log(data.result);
     setSearchItems(data.result);
   }
 
