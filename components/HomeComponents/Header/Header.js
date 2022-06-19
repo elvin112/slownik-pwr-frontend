@@ -106,12 +106,12 @@ const Header = () => {
       <div
         className={styles.searchbarContainer}
         onFocus={bringSearchResultWindowHandler}
+        onBlur={closeSearchResultWindowHandler}
       >
         <input
           className={styles.searchInput}
           type="search"
           placeholder="title"
-          onBlur={closeSearchResultWindowHandler}
           onChange={searchInputChangeHandler}
         />
         <button className={styles.searchButton}>
