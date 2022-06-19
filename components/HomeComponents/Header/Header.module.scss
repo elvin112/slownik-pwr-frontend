@@ -53,16 +53,26 @@
 }
 
 .searchButtonResultContainer {
-  background-color: white;
-  width: 36.6%;
-  overflow-y: scroll;
   position: absolute;
+  background-color: white;
+  width: 36.8%;
+  top: 9.8vh;
+  left: 24.6%;
+  overflow-y: scroll;
   border: 1px solid #b32216;
+  border-radius: 6px;
+  border-top: 0;
   height: 50vh;
+  z-index: 30;
 }
 
 .searchWindowHeader {
   display: flex;
+}
+
+.seachLink {
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .searchWindowHeader button {
@@ -78,7 +88,7 @@
 }
 
 .searchWindowContent li {
-  font-size: 4 !important;
+  list-style: none !important;
 }
 
 .headerNav {
@@ -89,7 +99,7 @@
   margin: 2rem;
   text-decoration: none;
   color: black;
-  font-size: 15px !important;
+  font-size: 18px !important;
   font-weight: 700 !important;
 }
 
